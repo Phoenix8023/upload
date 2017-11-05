@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width intial=1.0"/>
+		<link rel="stylesheet" href="myswiper/swiper-3.3.1.min.css" />
+		<link rel="stylesheet" href="myswiper/animate.min.css" />
+		<style>
+			*{margin:0;padding:0;}
+			ul,li{
+				list-style: none;
+				margin: 0;
+			}
+			html,body{
+				margin: 0;
+				padding: 0;
+				height: 100%;
+			}
+			.swiper-container{
+				height: 100%;
+				background: #333;
+			}
+			.swiper-pagination-bullet{
+				background: #ccc;
+				opacity: 0.8;
+				filter: alpha(opacity=80);
+			}
+			.swiper-pagination-bullet-active{
+				width: 10px;
+				height: 10px;
+				transform: translate(-1px);
+				border: 1px solid #fff;
+				box-sizing: border-box;
+				background: none;
+			}
+			@keyframes rotate{
+				from{transform:rotate(0deg)}
+				to{transform: rotate(360deg);}
+			}
+			#bgm{
+				position: fixed;
+				width: 50px;
+				height: 50px;
+				top: 10px;
+				right: 10px;
+				z-index: 5;
+				border-radius: 50%;
+			}
+			#bgm.audioplay{
+				background:url(img/bgm.gif);
+				background-size: cover;
+			}
+			#bgm .bgmafter{
+				position: absolute;
+				width: 30px;
+				height: 30px;
+				top: 10px;
+				left: 10px;
+				background: url(img/bgm02.png);
+				background-size: cover;
+			}
+			#bgm.audioplay .bgmafter{
+				animation: rotate 2s linear 0s infinite;
+			}
+			.floor1{
+				background: url(img/list1_1.png);
+				background-size: cover;
+				position: relative;
+			}
+			.floor1 .sun{
+				position: absolute;
+				width: 60vw;
+				height: 60vw;
+				top: 5%;
+				left: 30vw;
+				animation: rotate 5s linear 0s infinite;
+			}
+			.sun img{
+				width: 100%;
+				height: 100%;
+			}
+			#capimg{
+				position: absolute;
+				width: 100%;
+				height: 80%;
+				top: 20%;
+			}
+			#capimg img{
+				width: 100%;
+				height: 100%;
+			}
+			#capimg  .tree{
+				width: 100%;
+			}
+			#capimg  .bird{
+				position:absolute;
+				width: 24%;
+				height: 35%;
+				left: 50%;
+				top: -10%;
+			}
+			#capimg .pumpkin_one{
+				position: absolute;
+				width: 20vw;
+				height: 20vw;
+				left: 26%;
+				top: 18%;
+			}
+			#capimg .pumpkin_two{
+				position: absolute;
+				width: 14vw;
+				height: 14vw;
+				left:40%;
+				top: 35%;
+			}
+			@keyframes shake{
+				0%{
+					transform: translate(-10px);
+				}
+				33%{
+					transform: translate(0,10px);
+				}
+				66%{
+					transform: translate(0,-10px);
+				}
+				100%{
+					transform: translate(10px);
+				}
+			}
+			.shake{
+				animation: shake  0.08s linear 3s 15 alternate;
+			}
+			#capimg .pumpkin_thr{
+				position: absolute;
+				width: 12vw;
+				height: 12vw;
+				left: 55%;
+				top: 30%;	
+			}
+			#capimg .line_one{
+				position: absolute;
+				top: 7%;
+				left: 34%;
+				height: 16%;
+			}
+			#capimg .line_two{
+				position: absolute;
+				height: 28%;
+				left: 47%;
+				top: 10%;
+			}
+			#capimg .p1{
+				position: absolute;
+				width: 82%;
+				height: 11%;
+				left: 9%;
+				top: 60%;
+			}
+			#capimg .p2{
+				position: absolute;
+				width: 50%;
+				height: 7%;
+				left: 25%;
+				top: 72%;
+			}
+			#capimg .p3{
+				position: absolute;
+				width: 100%;
+				height: 14%;
+				top: 82%;
+				left: 0;
+				display: flex;
+			}
+			/*第一页 end*/
+			.floor2{
+				background: url(img/list2_7.png);
+				background-size: cover;
+				position: relative;
+			}
+			.floor2 img{
+				width: 100%;
+			}
+			.hat{
+				width: 100%;
+				height: 35%;
+				margin-top:5%;
+				position: relative;
+				z-index: 2;
+			}
+			.head{
+				position: absolute;
+				width: 60%;
+				height: 44%;
+				left: 20%;
+				top: 22%;
+			}
+			@keyframes big{
+				from{
+					transform: scale(0.5);
+				}
+				to{
+					transform: scale(1.5);
+				}
+			}
+			.head .eye{
+				position: absolute;
+				width: 60px;
+				height: 60px;
+				left: 52%;
+				top: 20%;
+				animation: big 2s ease 0s infinite alternate;
+			}
+			.floor2 div[class^="p"]{
+				position: absolute;
+				width: 60%;
+				height: 40px;
+				left: 20%;
+			}
+			.floor2 div[class^="p"] img:nth-of-type(2){
+				height: 40px;
+				margin-top: -15px;
+				width: 110%;
+				margin-left: -5px;
+			}
+			.floor2 .p1{
+				top: 70%;
+			}
+			.floor2 .p2{
+				top:80% ;
+			}
+			/*第二页 end*/
+			.floor3 img{
+				width: 100%;
+			}
+			
+			@keyframes rotateIn{
+				0%{
+					transform: rotateY(0deg);
+				}
+				50%{
+					transform:translate(50px,-50px) rotateY(180deg) scale(1.5) ;
+				}
+				100%{
+					transform:rotateY(360deg) scale(1) translate(0px);
+				}
+			}
+			
+			.rotateIn{
+				animation: rotateIn 2s ease 0.3s 1;
+			}
+			.floor3 .outBox{
+				width: 70%;
+				height: 70%;
+				position: absolute;
+				top:28%;
+				left: 15%;
+			}
+			.floor3 .person{
+				position: absolute;
+				width: 70%;
+				height: 60%;
+				left: 15%;
+				top: 36%;
+			}
+			.floor3 .angle{
+				position: absolute;
+				width: 40%;
+				top: 0;
+				left: 34%;
+				animation: angle 2s ease 3s infinite alternate;
+			}
+			@keyframes angle{
+				from{
+					transform: scale(0.8);
+				}
+				to{
+					transform: scale(1.2);
+				}
+			}
+			.floor3 .p1{
+				margin-top: 10%;
+				height:10% ;
+				width: 40%;
+				margin-left: 5%;
+			}
+			.floor3>div[class^="p"] img:nth-of-type(2){
+				height: 40%;
+				margin-top:-8%;
+				width: 110%;
+				margin-left: -5px;
+			}
+			.floor3 .p2{
+				width: 81%;
+				height: 10%;
+				margin-left: 15%;
+			}
+			/*第三页 end*/
+			.floor4 img{
+				width: 100%;
+			}
+			.floor4{
+				background: url(img/list4_11.png);
+				background-size: cover;
+				position: relative;
+			}
+			.floor4 .moon{
+				width: 67vw;
+				height: 67vw;
+				position: absolute;
+				left: 16vw;
+				top:13%;
+				animation: rotate 5s linear 0s infinite;
+			}
+			@keyframes hand{
+				from{
+					transform: rotate(90deg);
+				}
+				to{
+					transform: rotate(0deg);
+				}
+			}
+			.handAni{
+				transform: rotate(90deg);
+				animation: hand  3s linear 0s 1 forwards;
+			}
+			.floor4 .hand{
+				width: 56%;
+				height: 70%;
+				position: absolute;
+				top: 15%;
+				left: 15%;
+				transform:rotate(90deg);
+				transform-origin: center bottom;
+				
+			}
+			.floor4>div[class^="bat"]{
+				position: absolute;
+				animation: bat 2s linear 0s infinite alternate;
+			}
+			@keyframes bat{
+				from{
+					opacity: 1;
+				}
+				to{
+					opacity: 0;
+				}
+			}
+			.floor4 .bat_one{
+				width: 13%;
+				height: 5%;
+				left:5%;
+				top: 25%;
+				z-index: 5;
+				transform: rotate(-30deg);
+				animation-delay: 0s!important;
+			}
+			.floor4 .bat_two{
+				width: 27%;
+				height: 8%;
+				transform: rotate(-20deg);
+				left: 7%;
+				top: 46%;
+				animation-delay: 0.5s!important;
+			}
+			.floor4 .bat_thr{
+				width: 15%;
+				height: 4%;
+				left: 59%;
+				top: 14%;
+				transform: rotate(10deg);
+				animation-delay: 1s!important;
+			}
+			.floor4 .bat_fou{
+				width: 35%;
+				height: 10%;
+				left: 65%;
+				top: 27%;
+				animation-delay: 1.5s!important;
+			}
+			.floor4 .p1{
+				width: 72%;
+				left: 14%;
+				position: absolute;
+				height: 5%;
+				top: 75%;
+			}
+			.floor4 .p2{
+				width: 72%;
+				left: 14%;
+				position: absolute;
+				height: 5%;
+				top: 82%;
+			}
+			.floor4 div[class^="p"] img:nth-of-type(2){
+				height: 60%;
+				width: 110%;
+				margin-top:-20%;
+				margin-left: -5px;
+			}
+			.floor4 .bars{
+				position: absolute;
+				width: 74%;
+				left: 13%;
+				top: 56%;
+			}
+			/*第四楼  end*/
+			.floor5{
+				background: #000;
+				position: relative;
+			}
+			.floor5 img{
+				width: 100%;
+			}
+			@keyframes tooth{
+				0%{
+					transform: translate(-10px);
+				}
+				33%{
+					transform: translate(0,10px);
+				}
+				66%{
+					transform: translate(0,-10px);
+				}
+				100%{
+					transform: translate(10px);
+				}
+			}
+			.toothAni{
+				animation: tooth 0.1s linear 0s 15;
+			}
+			.floor5 .tooth{
+				width: 72%;
+				height: 23%;
+				position: absolute;
+				left: 14%;
+				top: 32%;	
+				z-index: 5;
+			}
+			.floor5 .p1{
+				position: absolute;
+				width: 72%;
+				height: 5%;
+				top: 73%;
+				left: 6%;
+			}
+			.floor5 .p2{
+				position: absolute;
+				width: 63%;
+				height: 5%;
+				top: 81%;
+				left: 20%;
+			}
+			.floor5>div[class^="p"] img:nth-of-type(2){
+				width: 110%;
+				height: 80%;
+				margin-top: -20%;
+				margin-left: -5px;
+			}
+			.floor5 #eyes{
+				position: absolute;
+				width: 100%;
+				height: 60%;
+				top: 0;
+				display: flex;
+				flex-flow: row wrap;
+			}
+			#eyes li{
+				width: 25vw;
+				height: 25vw;
+			}
+			@keyframes show{
+				from{
+					opacity: 1;
+					filter:alpha(opacity=100);
+				}
+				to{
+					opacity: 0;
+					filter:alpha(opacity=0);
+				}
+			}
+			#eyes li img.show{
+				animation: show 2s linear 0s infinite alternate;
+			}
+			#eyes li img{display: none;}
+			#eyes.show li img{
+				display: block;
+				opacity: 0;
+				filter:alpha(opacity=0);
+			}
+			/*第五楼  end*/
+			
+			.floor6{
+				background: url(img/list6_9.png);
+				background-size: 100% 100%;
+				position: relative;
+			}
+			.floor6 img{
+				width: 100%;
+			}
+			.floor6 .pepo{
+				position: absolute;
+				width: 57%;
+				height: 34%;
+				left: 22%;
+				top: 32%;
+				z-index: 5;
+			}
+			.floor6 .lefteye{
+				position: absolute;
+				width: 5.2%;
+				height: 6%;
+				left: 45.8%;
+				top: 42.5%;
+				z-index: 6;
+				opacity: 0;
+			}
+			.floor6 .righteye{
+				position: absolute;
+				width: 7.2%;
+				height: 6%;
+				left: 57.3%;
+				top: 42%;
+				z-index: 6;
+				opacity: 0;
+			}
+			.floor6 .fire{
+				position: absolute;
+				width: 70%;
+				height: 46%;
+				left: 15%;
+				top: 9%;
+			}
+			.floor6 .p1{
+				width: 60%;
+				height: 5%;
+				position: absolute;
+				left: 20%;
+				top: 70%;
+			}
+			.floor6 .p2{
+				width: 66%;
+				height: 5%;
+				position: absolute;
+				left: 17%;
+				top: 78%;
+			}
+			.floor6>div[class^="p"] img:nth-of-type(2){
+				height: 60%;
+				margin-top: -20%;
+				width: 110%;
+				margin-left: -5%;
+			}
+			@keyframs flash{
+				from{
+					opacity:0;
+					filter: alpha(opacity=0);
+				}to{
+					opacity: 1;
+					filter: alpha(opacity=100);
+				}
+			}
+			.flash{
+				animation: flash 7s linear 0.5s infinite alternate;
+			}
+			/*第六页 end*/
+			.floor7{
+				background: url(img/list7_1.png);
+				background-size: 100% 100%;
+			}
+			.floor7 img{
+				width: 100%;
+			}
+			.floor7 .moon{
+				position: absolute;
+				width: 68%;
+				height: 55.6%;
+				left: 16%;
+				top: 10%;
+			}
+			.floor7 .cross{
+				position: absolute;
+				width: 22%;
+				height: 15%;
+				left: 39%;
+				top: 8.5%;
+			}
+			.floor7 .tomb{
+				position: absolute;
+				width: 74%;
+				height: 74%;
+				left: 13%;
+				top: 22%;
+			}
+			@keyframes zoomIni{
+				from{
+					width: 3%;
+					height: 8%;
+				}
+				to{
+					width: 13%;
+					height:28%;
+				}
+			}
+			.zoomIni{
+				animation:zoomIni 10s linear 1.5s infinite alternate;
+			}
+			.floor7 .spider{
+				position: absolute;
+				width: 0%;
+				height: 0%;
+				left: 60%;
+				top: 24%;
+				z-index: 5;
+			} 
+			.floor7 .form{
+				position: absolute;
+				width: 51%;
+				height: auto;
+				min-height:200px;
+				left: 26%;
+				top: 43%;
+				background: #334960;
+				text-align: center;
+				padding: 20px 0;
+				border-radius: 10px;
+			}
+			.form input{
+				border-radius: 5px;
+				width: 80%;
+				line-height: 30px;
+				margin-bottom:12px;
+				padding-left: 5px;
+				box-sizing: border-box;
+				border: none;
+			}
+			.form input[type="button"]{
+				background: #217fbc;
+				color: #fff;
+			}
+			.floor7 .word{
+				position: absolute;
+				width: 44%;
+				height: 12%;
+				left: 30%;
+				top: 30%;
+			}
+			.floor7 .address{
+				position: absolute;
+				width: 45.6%;
+				height: 6%;
+				left: 29%;
+				top: 86%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="bgm" class="audioplay">
+			<div class="bgmafter rota"></div>
+		</div>
+		<audio id="au" src="bgm.mp3"></audio>
+		<div class="swiper-container">
+		  <div class="swiper-wrapper">
+		    <div class="swiper-slide floor1">
+		    	<div class="sun">
+		    		<img src="img/list1_3.png" alt="" />
+		    	</div>
+		    	<div id="capimg">
+					<img class="tree ani" src="img/list1_2.png" alt="" swiper-animate-effect="bounceInUp" swiper-animate-duration="1s" swiper-animate-delay="0.3s"/>
+					<div class="bird ani" swiper-animate-effect="flip" swiper-animate-duration="1.2s" swiper-animate-delay="1.5s" >
+						<img src="img/list1_14.png"/>
+					</div>
+					<div class="line_one ani" swiper-animate-effect="bounceInDown" swiper-animate-duration="0.8s" swiper-animate-delay="1.5s" >
+						<img src="img/list1_16.png"/>
+					</div>
+					<div class="line_two ani" swiper-animate-effect="bounceInDown" swiper-animate-duration="0.8s" swiper-animate-delay="1.5s" >
+						<img src="img/list1_16.png" alt="" />
+					</div>
+					<div class="pumpkin_one ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.8s" swiper-animate-delay="2.5s" >
+						<img src="img/list1_4.png"/>
+					</div>
+					<div class="pumpkin_two ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.8s" swiper-animate-delay="2.5s" >
+						<img src="img/list1_5.png" alt="" />
+					</div>
+					<div class="pumpkin_thr shake" >
+						<img src="img/list1_5.png" alt="" />
+					</div>
+					<div class="p1 ani" swiper-animate-effect="flip" swiper-animate-duration="1.0s" swiper-animate-delay="1.8s" >
+						<img src="img/list1_7.png"/>
+					</div>
+					<div class="p2 ani" swiper-animate-effect="flip" swiper-animate-duration="1.0s" swiper-animate-delay="2.3s" >
+						<img src="img/list1_8.png"/>
+					</div>
+					<div class="p3">
+						<span class="ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="3.8s"><img src="img/list1_9.png"/></span>
+						<span class="ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="3.9s"><img src="img/list1_10.png" alt="" /></span>
+						<span class="ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="4.0s"><img src="img/list1_11.png" alt="" /></span>
+						<span class="ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="4.1s"><img src="img/list1_12.png" alt="" /></span>
+						<span class="ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="4.2s"><img src="img/list1_13.png" alt="" /></span>
+					</div>
+				</div>
+		    </div>
+		    <div class="swiper-slide floor2">
+		    	<div class="hat ani"swiper-animate-effect="bounce" swiper-animate-duration="1.5s" swiper-animate-delay="0.5s">
+		    		<img src="img/list2_6.png"/>
+		    	</div>
+		    	<div class="head ani" swiper-animate-effect="zoomIn" swiper-animate-duration="1.0s" swiper-animate-delay="0.3s">
+		    		<img src="img/list2_1.png"/>
+		    		<img class="eye" src="img/list2_5.png"/>
+		    	</div>
+		    	<div class="p1 ani" swiper-animate-effect="flip" swiper-animate-duration="1.5s" swiper-animate-delay="0.8s">
+		    		<img src="img/list2_2.png"/>
+		    		<img src="img/list2_4.png"/>
+		    	</div>
+		    	<div class="p2 ani" swiper-animate-effect="flip" swiper-animate-duration="1.5s" swiper-animate-delay="1.5s">
+		    		<img src="img/list2_3.png" alt="" />
+		    		<img src="img/list2_4.png"/>
+		    	</div>
+		    </div>
+		    <div class="swiper-slide floor3">
+		    	<div class="outBox">
+		    		<img src="img/list3_5.png"/>
+		    	</div>
+		    	<div class="person">
+		    		<img src="img/list3_1.png"/>
+		    		<div class="angle">
+		    			<img src="img/list3_6.png"/>
+		    		</div>
+		    	</div>
+		    	<div class="p1 ani" swiper-animate-effect="rotateInDownLeft" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+		    		<img src="img/list3_4.png" alt="" />
+		    		<img src="img/list3_3.png" alt="" />
+		    	</div>
+		    	<div class="p2 ani" swiper-animate-effect="rotateInDownRight" swiper-animate-duration="1s" swiper-animate-delay="1.8s">
+		    		<img src="img/list3_2.png" alt="" />
+		    		<img src="img/list3_3.png" alt="" />
+		    	</div>
+		    </div>
+		    <div class="swiper-slide floor4">
+		    	<div class="moon" swiper-animate-effect="rotateInDownLeft" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+		    		<img src="img/list4_2.png"/>
+		    	</div>
+		    	<div class="hand" >
+		    		<img src="img/list4_3.png" alt="" />
+		    	</div>
+		    	<div class="bat_one">
+		    		<img src="img/list4_4.png" alt="" />
+		    	</div>
+		    	<div class="bat_two">
+		    		<img src="img/list4_4.png" alt="" />
+		    	</div>
+		    	<div class="bat_thr">
+		    		<img src="img/list4_4.png" alt="" />
+		    	</div>
+		    	<div class="bat_fou">
+		    		<img src="img/list4_4.png" alt="" />
+		    	</div>
+		    	<div class="p1 ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="2s">
+		    		<img src="img/list4_8.png" alt="" />
+		    		<img src="img/list4_10.png" alt="" />
+		    	</div>
+		    	<div class="p2 ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="1s" swiper-animate-delay="2s">
+		    		<img src="img/list4_9.png" alt="" />
+		    		<img src="img/list4_10.png" alt="" />
+		    	</div>
+		    	<div class="bars">
+		    		<img src="img/list4_1.png"/>
+		    	</div>
+		    </div>
+		    <div class="swiper-slide floor5">
+		    	<div class="tooth">
+		    		<img src="img/list5_1.png"/>
+		    	</div>
+		    	<div class="p1 ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="1s" swiper-animate-delay="2.5s">
+		    		<img src="img/list5_2.png" alt="" />
+		    		<img src="img/list5_4.png" alt="" />
+		    	</div>
+		    	<div class="p2 ani" swiper-animate-effect="fadeInRight" swiper-animate-duration="1s" swiper-animate-delay="2.5s">
+		    		<img src="img/list5_3.png" alt="" />
+		    		<img src="img/list5_4.png" alt="" />
+		    	</div>
+		    	<ul id="eyes">
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    		<li></li>
+		    	</ul>
+		    </div>
+		    <div class="swiper-slide floor6">
+		    	<div class="pepo ani" swiper-animate-effect="fadeIn" swiper-animate-duration="1s" swiper-animate-delay="0.3s">
+		    		<img src="img/list6_1.png"/>
+		    	</div>
+		    	<div class="fire ani" swiper-animate-effect="fadeIn" swiper-animate-duration="1s" swiper-animate-delay="2s">
+		    		<img src="img/list6_2.png" alt="" />
+		    	</div>
+		    	<div class="lefteye">
+		    		<img src="img/list6_7.png"/>
+		    	</div>
+		    	<div class="righteye">
+		    		<img src="img/list6_8.png" alt="" />
+		    	</div>
+		    	<div class="p1 ani" swiper-animate-effect="rotateInDownRight" swiper-animate-duration="1s" swiper-animate-delay="2.5s">
+		    		<img src="img/list6_3.png"/>
+		    		<img src="img/list6_4.png"/>
+		    	</div>
+		    	<div class="p2 ani" swiper-animate-effect="rotateInDownLeft" swiper-animate-duration="1s" swiper-animate-delay="2.5s"> 
+		    		<img src="img/list6_5.png"/>
+		    		<img src="img/list6_4.png"/>
+		    	</div>
+		    </div>
+		    <div class="swiper-slide floor7">
+		    	<div class="moon ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+		    		<img src="img/list7_2.png"/>
+		    	</div>
+		    	<div class="cross ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+		    		<img src="img/list7_3.png" alt="" />
+		    	</div>
+		    	<div class="tomb ani" swiper-animate-effect="slideInUp" swiper-animate-duration="1s" swiper-animate-delay="0.5s">
+		    		<img src="img/list7_4.png"/>
+		    	</div>
+		    	<div class="spider">
+		    		<img src="img/list7_5.png"/>
+		    	</div>
+		    	<div class="word ani" swiper-animate-effect="fadeIn" swiper-animate-duration="1s" swiper-animate-delay="1.5s">
+		    		<img src="img/list7_6.png"/>
+		    	</div>
+		    	<form class="form ani" swiper-animate-effect="fadeIn" swiper-animate-duration="1.5s" swiper-animate-delay="2.5s">
+		    		<input type="text" placeholder="姓名"/>
+		    		<input type="text" placeholder="手机"/>
+		    		<input type="text"  placeholder="QQ"/>
+		    		<input type="button" value="提交"/>
+		    	</form>
+		    </div>
+		  </div>
+		   <div class="swiper-pagination"></div>
+		</div>
+	</body>
+	<script src="myswiper/zepto.min.js"></script>
+	<script src="myswiper/swiper-3.3.1.min.js"></script>
+	<script src="myswiper/swiper.animate1.0.2.min.js"></script>
+	<script src="js/touch.js"></script>
+	<script>        
+	  var mySwiper = new Swiper ('.swiper-container', {
+	  		direction:"vertical",
+	  		pagination : '.swiper-pagination',
+	  		paginationClickable :true,
+		  	onInit: function(swiper){ //Swiper2.x的初始化是onFirstInit
+		    swiperAnimateCache(swiper); //隐藏动画元素 
+		    swiperAnimate(swiper); //初始化完成开始动画
+		    
+	  	}, 
+	  onSlideChangeEnd: function(swiper){ 
+		    swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+		    if(mySwiper.activeIndex==0){
+		    	$(".pumpkin_thr").addClass("shake");
+		    }
+		    if(mySwiper.activeIndex==2){
+		    	$(".outBox").addClass("rotateIn");
+		    }
+		    if(mySwiper.activeIndex==3){
+		    	$(".hand").addClass("handAni");
+		    }else{
+		    	$(".hand").removeClass("handAni");$(".hand").removeClass("handAni");
+		    }
+		    if(mySwiper.activeIndex==4){
+		    	$(".tooth").addClass("toothAni");
+		    	setTimeout(function(){
+		    		$("#eyes").addClass("show");
+		    	},2000)
+		    }else{
+		    	$("#eyes").removeClass("show");
+		    }
+		    if(mySwiper.activeIndex==5){
+		    	$(".lefteye").addClass("flash");
+		    	$(".righteye").addClass("flash");
+		    }else{
+		    	$(".lefteye").removeClass("flash");
+		    	$(".righteye").removeClass("flash");
+		    }
+		    if(mySwiper.activeIndex==6){
+		    	$('.spider').addClass("zoomIni");
+		    	$(".address").addClass("shake");
+		    }else{
+		    	$(".spider").removeClass("zoomIni");
+		    	$(".address").removeClass("shake");
+		    }
+		  } 
+	  })        
+  </script>
+  
+  <script>
+	 au.autoplay=true;
+  	 touch.on("#bgm","tap",function(){
+  	 	$("#bgm").toggleClass("audioplay");
+  	 	if(au.paused){
+  	 		au.play();
+  	 	}else{
+  	 		au.pause();
+  	 	}
+  	 })
+  	 $(".pumpkin_thr").on("webkitAnimationEnd",function(){
+  	 	$(".pumpkin_thr").removeClass("shake");
+  	 })
+  	 $(".outBox").on("webkitAnimationEnd",function(){
+  	 	$(".outBox").removeClass("rotateIn");
+  	 })
+  	 $(".tooth").on("webkitAnimationEnd",function(){
+  	 	$(this).removeClass("toothAni");
+  	 })
+  	 var eyesArr=["img/list5_5.png","img/list5_6.png","img/list5_7.png","img/list5_8.png"];
+  	 $("#eyes>li").each(function(){
+  	 	$("<img>",{
+  	 		src:eyesArr[Math.floor(Math.random()*eyesArr.length)],
+  	 		style:"width:"+((Math.random()*60)+40)+"%;transform:rotate("+Math.random()*360+"deg);animation-delay:"+Math.random()*5+"s;animation-duration:"+(2+Math.random()*3)+"s;",
+  	 		class:"show"
+  	 	}).appendTo($(this));
+  	 })
+  </script>
+</html>
